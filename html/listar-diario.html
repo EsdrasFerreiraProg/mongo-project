@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type = "text/css" href="/css/styles-listar.css">
+    
+    <title>Querido Diário</title>
+</head>
+<body>
+</head>
+<body>
+
+    <div class="topnav">
+    <a class="active" href="/diario">Home</a>
+    <a href="/meus-registros">Meus Registros</a>
+    <a href="https://google.com">Google</a>
+    <a href="https://github.com/EsdrasFerreiraProg">GitHub</a>
+    <h3 class="querido-diario">QueridoDiario</h4>
+    </div>
+
+    <div style="padding-left:16px">
+  
+</div>
+    <h1></h1>
+    <form class="form" action="" method="POST">
+        <input name="data" list="datas">
+            <datalist id="datas">
+            
+            </datalist>
+            <input type="submit" value="Escolher data">
+
+            <div id="diary-register" class="container-diary">
+                <script>
+
+                    async function getRegister(){
+
+                        let url = '/registros';
+
+                        try {
+                            let res = await fetch(url);
+                            
+                            return await res.json();
+                        } catch (error) {
+                             console.log(error);
+                        }
+                    }
+
+                    async function renderRegisters() {
+                        let register = await getRegister();
+                        
+                        let html = `<h2>Data: ${register.date}</h2><h3>Corpo da Mensagem:</h4><p>${register.body}</p>`;
+
+                        let container = document.getElementById("diary-register");
+                        container.innerHTML = html;
+                    }
+
+                renderRegisters();
+                </script>
+            </div>
+    </form>
+    
+    <script>
+        async function getUsers() {
+            let url = '/datas';
+            try {
+                 let res = await fetch(url);
+                 return await res.json();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        async function renderDates() {
+            let datas = await getUsers();
+            let html = '';
+            datas.forEach(data => {
+                    console.log(data);
+                    let htmlSegment = `<option id="datas-container" value=${data}>`;
+
+             html += htmlSegment;
+        });
+
+        let container = document.getElementById("datas");
+        container.innerHTML = html;
+}
+
+renderDates();
+
+    </script>
+</body>
+</html>
